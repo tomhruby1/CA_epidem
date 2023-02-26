@@ -58,10 +58,10 @@ def time_step(S, beta, gamma, mu, N, V):
 if __name__=='__main__':
     #sim setup
     T = 20
-    out_dir_path = 'sim1/' 
+    out_dir_path = 'sim_std/' 
  
     # sim params
-    dim = (15, 15)
+    dim = (32, 32)
     beta = 0.01
     gamma = 0.1 
     V = [(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1)]    
@@ -69,9 +69,9 @@ if __name__=='__main__':
     out_p = Path.cwd()/out_dir_path
     out_p.mkdir(exist_ok=True)
     
-    N = np.ones(dim) * 5 # --> calc automat. from initial SIR vals for each cell
+    N = np.ones(dim)  # --> calc automat. from initial SIR vals for each cell
     mu_dim = (dim[0], dim[1], len(V))    #mu param for each neighbor for each cell
-    mu = np.ones(mu_dim) * 0.005
+    mu = np.ones(mu_dim) * 0.2
 
     S = np.ones((dim[0], dim[1], 3)) #state consisting of SIR values
     S[:,:,0] *= N
@@ -79,7 +79,7 @@ if __name__=='__main__':
     S[:,:,2] *= 0
 
     # init infection
-    inf_idx = (2,2)
+    inf_idx = (5,5)
     infected_count = 1
 
     S[inf_idx[0],inf_idx[1],1] = infected_count
@@ -88,5 +88,4 @@ if __name__=='__main__':
     # RUN SIM
     for t in range(T):
         S = time_step(S, beta, gamma, mu, N, V)
-        plot_cell_state(S[:,:,1],  colormap='viridis', title=f"Infected t={t}", 
-                        save_path=str(out_p/f'step_{t}.png'), show=False)
+        plot_cell_state(S[:,:,1],  colormap='viridis', title=f"Infected t={t}", show=False)
