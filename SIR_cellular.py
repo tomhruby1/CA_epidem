@@ -79,7 +79,7 @@ if __name__=='__main__':
     S[:,:,2] *= 0
 
     # init infection
-    inf_idx = (5,5)
+    inf_idx = (15,15)
     infected_count = 1
 
     S[inf_idx[0],inf_idx[1],1] = infected_count
@@ -88,4 +88,4 @@ if __name__=='__main__':
     # RUN SIM
     for t in range(T):
         S = time_step(S, beta, gamma, mu, N, V)
-        plot_cell_state(S[:,:,1],  colormap='viridis', title=f"Infected t={t}", show=False)
+        plot_cell_state(S[:,:,1],  colormap='viridis', title=f"Infected t={t+1}", show=True, save_path=out_dir_path)
